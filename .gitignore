@@ -1,0 +1,57 @@
+## .NET / Visual Studio ignore rules
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Rr]elease/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Test results & coverage
+[Tt]est[Rr]esult*/
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.trx
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!packages/build/
+
+# Local databases & secrets
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
+
+# OS noise
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Publish output
+publish/
+*.publishsettings
+PublishScripts/
