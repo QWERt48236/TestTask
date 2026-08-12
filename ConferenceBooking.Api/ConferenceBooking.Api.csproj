@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <!--
+      Pinned deliberately. Microsoft.AspNetCore.OpenApi 10.0.10 resolves Microsoft.OpenApi 2.0.0
+      transitively, which carries a high-severity advisory (GHSA-v5pm-xwqc-g5wc) and trips NU1903
+      on restore. Overriding it here lifts the transitive dependency to a patched build.
+      Revisit once Microsoft.AspNetCore.OpenApi ships a release that pulls a fixed version itself.
+    -->
+    <PackageReference Include="Microsoft.OpenApi" Version="2.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConferenceBooking.Infrastructure\ConferenceBooking.Infrastructure.csproj" />
+    <ProjectReference Include="..\ConferenceBooking.Application\ConferenceBooking.Application.csproj" />
+  </ItemGroup>
+
+</Project>
