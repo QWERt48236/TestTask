@@ -1,12 +1,8 @@
 namespace ConferenceBooking.Domain.Entities;
 
-/// <summary>
-/// A conference hall available for rent, with a capacity, an hourly rate,
-/// and the set of amenities it offers.
-/// </summary>
 public class Hall
 {
-    /// <summary>Required by EF Core to materialise the entity.</summary>
+    // Required by EF Core.
     private Hall()
     {
         Name = string.Empty;
@@ -23,13 +19,11 @@ public class Hall
 
     public string Name { get; private set; }
 
-    /// <summary>Maximum number of people the hall seats.</summary>
     public int Capacity { get; private set; }
 
-    /// <summary>Rate before any time-band discount or surcharge is applied.</summary>
+    // Before time-band discounts and surcharges.
     public decimal BaseHourlyRate { get; private set; }
 
-    /// <summary>Amenities this hall offers.</summary>
     public ICollection<Amenity> Amenities { get; private set; } = [];
 
     public void Update(string name, int capacity, decimal baseHourlyRate)

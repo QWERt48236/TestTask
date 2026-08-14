@@ -17,7 +17,7 @@ public class Amenity
 
     public string Name { get; private set; }
 
-    /// <summary>Flat fee charged once per booking, not per hour.</summary>
+    // Flat fee per booking, not per hour.
     public decimal Price { get; private set; }
 
     public void Update(string name, decimal price)
@@ -31,7 +31,6 @@ public class Amenity
             ? throw new ArgumentException("Amenity name is required.", nameof(name))
             : name.Trim();
 
-    // Free amenities are allowed; negative ones are not.
     private static decimal EnsureValidPrice(decimal price) =>
         price < 0
             ? throw new ArgumentOutOfRangeException(nameof(price), price, "Amenity price cannot be negative.")

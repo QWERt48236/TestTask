@@ -1,12 +1,12 @@
 namespace ConferenceBooking.Domain.Entities;
 
-/// <summary>
-/// A confirmed reservation of a hall for a period of time, with the amenities
-/// chosen for it and the price that was charged.
-/// </summary>
 public class Booking
 {
-    /// <summary>Required by EF Core to materialise the entity.</summary>
+    // Anything longer is a multi-day event, priced differently. Also keeps Duration
+    // inside SQL Server's time column, which cannot hold 24 hours or more.
+    public static readonly TimeSpan MaxDuration = TimeSpan.FromHours(12);
+
+    // Required by EF Core.
     private Booking()
     {
     }
@@ -42,35 +42,42 @@ public class Booking
 
     public Hall Hall { get; private set; } = null!;
 
-    /// <summary>Local wall-clock start of the reservation.</summary>
+    // Venue-local wall clock.
     public DateTime Start { get; private set; }
 
     public TimeSpan Duration { get; private set; }
 
-    /// <summary>Exclusive end of the reservation, so back-to-back bookings do not overlap.</summary>
+    // Exclusive, so back-to-back bookings do not overlap.
     public DateTime End => Start + Duration;
 
-    /// <summary>Amenities chosen for this booking.</summary>
     public ICollection<Amenity> Amenities { get; private set; } = [];
 
-    /// <summary>Hall rental only, after time-band discounts and surcharges.</summary>
+    // Stored, not recalculated: a later rate change must not rewrite past bookings.
     public decimal BaseAmount { get; private set; }
 
     public decimal AmenitiesAmount { get; private set; }
 
-    /// <summary>
-    /// Stored rather than recalculated on read: a later change to the hall's rate
-    /// must not rewrite what this booking cost.
-    /// </summary>
     public decimal TotalAmount => BaseAmount + AmenitiesAmount;
 
-    /// <summary>Audit stamp, in UTC — unlike <see cref="Start"/>, which is venue-local.</summary>
+    // UTC, unlike Start.
     public DateTime CreatedAtUtc { get; private set; }
 
-    private static TimeSpan EnsureValidDuration(TimeSpan duration) =>
-        duration <= TimeSpan.Zero
-            ? throw new ArgumentOutOfRangeException(nameof(duration), duration, "Booking duration must be greater than zero.")
-            : duration;
+    private static TimeSpan EnsureValidDuration(TimeSpan duration)
+    {
+        if (duration <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(duration), duration, "Booking duration must be greater than zero.");
+        }
+
+        if (duration > MaxDuration)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(duration), duration, $"Booking duration cannot exceed {MaxDuration.TotalHours} hours.");
+        }
+
+        return duration;
+    }
 
     private static decimal EnsureNotNegative(decimal amount, string paramName) =>
         amount < 0
