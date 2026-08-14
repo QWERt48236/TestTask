@@ -7,8 +7,7 @@ public static class DependencyInjection
         services.AddControllers();
         services.AddOpenApi();
 
-        // Both are needed for GlobalExceptionHandler: AddProblemDetails registers the
-        // IProblemDetailsService it writes through.
+        // AddProblemDetails registers the service GlobalExceptionHandler writes through.
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
 

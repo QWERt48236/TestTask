@@ -10,6 +10,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IHallService, HallService>();
 
+        // Scoped, not singleton: it reads the bands through a scoped repository.
+        services.AddScoped<IPricingService, PricingService>();
+
         return services;
     }
 }

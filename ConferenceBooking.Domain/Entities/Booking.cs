@@ -2,8 +2,7 @@ namespace ConferenceBooking.Domain.Entities;
 
 public class Booking
 {
-    // Anything longer is a multi-day event, priced differently. Also keeps Duration
-    // inside SQL Server's time column, which cannot hold 24 hours or more.
+    // Also keeps Duration inside SQL Server's time column, which stops below 24 hours.
     public static readonly TimeSpan MaxDuration = TimeSpan.FromHours(12);
 
     // Required by EF Core.

@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 
-    // UI only: the document itself comes from AddOpenApi/MapOpenApi above.
+    // UI only: the document comes from MapOpenApi above.
     app.UseSwaggerUI(options =>
         options.SwaggerEndpoint("/openapi/v1.json", "Conference Booking API v1"));
 

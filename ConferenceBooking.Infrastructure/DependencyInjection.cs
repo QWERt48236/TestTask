@@ -19,6 +19,7 @@ public static class DependencyInjection
 
         services.AddScoped<IHallRepository, HallRepository>();
         services.AddScoped<IAmenityRepository, AmenityRepository>();
+        services.AddScoped<ITimeBandRepository, TimeBandRepository>();
 
         return services;
     }

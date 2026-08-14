@@ -46,7 +46,6 @@ public class HallConfiguration : IEntityTypeConfiguration<Hall>
                 {
                     join.HasKey("HallId", "AmenityId");
 
-                    // Every hall offers the full catalogue.
                     join.HasData(
                         from hallId in SeedIds.AllHalls
                         from amenityId in SeedIds.AllAmenities

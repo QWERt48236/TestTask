@@ -63,8 +63,7 @@ public class HallService : IHallService
     {
         var hall = await GetRequiredHallAsync(id, cancellationToken);
 
-        // Checked here so the caller gets a readable 409. Left to the database, the
-        // Restrict foreign key would surface as an opaque 500.
+        // Checked here for a readable 409; the Restrict FK alone would give an opaque 500.
         if (await _halls.HasBookingsAsync(id, cancellationToken))
         {
             throw new ConflictException($"Hall '{hall.Name}' has bookings and cannot be deleted.");
@@ -103,7 +102,7 @@ public class HallService : IHallService
         await _halls.GetByIdAsync(id, cancellationToken)
             ?? throw NotFoundException.For("Hall", id);
 
-    // Checked up front so a duplicate name is a 409 rather than a unique-index violation.
+    // Up front so a duplicate name is a 409, not a unique-index violation.
     private async Task EnsureNameIsFreeAsync(string name, Guid? excludeId, CancellationToken cancellationToken)
     {
         if (await _halls.NameExistsAsync(name, excludeId, cancellationToken))

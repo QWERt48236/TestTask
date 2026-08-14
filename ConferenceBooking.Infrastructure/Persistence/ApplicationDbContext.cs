@@ -23,14 +23,9 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Booking> Bookings => Set<Booking>();
 
-    /// <summary>
-    /// Translates constraint violations into <see cref="ConflictException"/>.
-    /// Services check for duplicates and dependants before writing, but those checks are
-    /// check-then-act: between the check and the commit, a concurrent request can take the
-    /// name or add a booking. The database constraint is what actually prevents the bad
-    /// write, and without this the caller would see a bare 500 instead of the 409 the
-    /// service intended.
-    /// </summary>
+    public DbSet<TimeBand> TimeBands => Set<TimeBand>();
+
+    // Service pre-checks race; the constraint is the real guard, and untranslated it is a 500.
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         try
@@ -50,7 +45,7 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    // An exception filter, so anything unrecognised propagates with its stack intact.
+    // Used as an exception filter, so anything unrecognised keeps its original stack.
     private static bool TryTranslate(DbUpdateException exception, out ConflictException conflict)
     {
         conflict = exception.InnerException is SqlException sql

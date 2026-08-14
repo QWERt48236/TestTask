@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ConferenceBooking.Api;
 
-// One place to turn domain and application failures into status codes, so controllers
-// stay free of try/catch and no internal detail leaks into a response.
+// One place to map failures to status codes, so controllers hold no try/catch.
 public class GlobalExceptionHandler : IExceptionHandler
 {
     private readonly IProblemDetailsService _problemDetailsService;
@@ -52,6 +51,7 @@ public class GlobalExceptionHandler : IExceptionHandler
     {
         NotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
         ConflictException => (StatusCodes.Status409Conflict, "Conflict"),
+        OutsideBusinessHoursException => (StatusCodes.Status400BadRequest, "Outside business hours"),
 
         // Domain guards throw these, so a bad value reaching the entity is still a 400.
         ArgumentException => (StatusCodes.Status400BadRequest, "Invalid request"),

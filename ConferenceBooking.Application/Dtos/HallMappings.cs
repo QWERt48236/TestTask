@@ -10,8 +10,7 @@ public static class HallMappings
         Name = hall.Name,
         Capacity = hall.Capacity,
         BaseHourlyRate = hall.BaseHourlyRate,
-        // By name, not id: GUIDs sort arbitrarily, so ordering by them would shuffle
-        // the list between halls for no reason a caller could predict.
+        // By name, not id: GUIDs sort arbitrarily.
         Amenities = [.. hall.Amenities.Select(a => a.ToDto()).OrderBy(a => a.Name)],
     };
 
