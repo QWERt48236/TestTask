@@ -9,11 +9,12 @@ public class Amenity
 
     public Amenity(string name, decimal price)
     {
+        Id = Guid.NewGuid();
         Name = EnsureValidName(name);
         Price = EnsureValidPrice(price);
     }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public string Name { get; private set; }
 

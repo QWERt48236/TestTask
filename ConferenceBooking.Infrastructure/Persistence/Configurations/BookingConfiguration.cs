@@ -12,6 +12,10 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.HasKey(b => b.Id);
 
+        // The constructor assigns the id, so EF must not try to supply one.
+        builder.Property(b => b.Id)
+            .ValueGeneratedNever();
+
         builder.Property(b => b.Start)
             .IsRequired();
 

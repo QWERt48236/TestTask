@@ -12,6 +12,10 @@ public class AmenityConfiguration : IEntityTypeConfiguration<Amenity>
 
         builder.HasKey(a => a.Id);
 
+        // The constructor assigns the id, so EF must not try to supply one.
+        builder.Property(a => a.Id)
+            .ValueGeneratedNever();
+
         builder.Property(a => a.Name)
             .IsRequired()
             .HasMaxLength(100);
@@ -24,8 +28,8 @@ public class AmenityConfiguration : IEntityTypeConfiguration<Amenity>
             .HasPrecision(18, 2);
 
         builder.HasData(
-            new { Id = 1, Name = "Projector", Price = 500m },
-            new { Id = 2, Name = "Wi-Fi", Price = 300m },
-            new { Id = 3, Name = "Sound", Price = 700m });
+            new { Id = SeedIds.Projector, Name = "Projector", Price = 500m },
+            new { Id = SeedIds.WiFi, Name = "Wi-Fi", Price = 300m },
+            new { Id = SeedIds.Sound, Name = "Sound", Price = 700m });
     }
 }

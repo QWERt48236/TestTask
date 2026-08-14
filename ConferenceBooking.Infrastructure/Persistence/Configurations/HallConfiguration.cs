@@ -12,6 +12,10 @@ public class HallConfiguration : IEntityTypeConfiguration<Hall>
 
         builder.HasKey(h => h.Id);
 
+        // The constructor assigns the id, so EF must not try to supply one.
+        builder.Property(h => h.Id)
+            .ValueGeneratedNever();
+
         builder.Property(h => h.Name)
             .IsRequired()
             .HasMaxLength(100);
@@ -44,20 +48,14 @@ public class HallConfiguration : IEntityTypeConfiguration<Hall>
 
                     // Every hall offers the full catalogue.
                     join.HasData(
-                        new { HallId = 1, AmenityId = 1 },
-                        new { HallId = 1, AmenityId = 2 },
-                        new { HallId = 1, AmenityId = 3 },
-                        new { HallId = 2, AmenityId = 1 },
-                        new { HallId = 2, AmenityId = 2 },
-                        new { HallId = 2, AmenityId = 3 },
-                        new { HallId = 3, AmenityId = 1 },
-                        new { HallId = 3, AmenityId = 2 },
-                        new { HallId = 3, AmenityId = 3 });
+                        from hallId in SeedIds.AllHalls
+                        from amenityId in SeedIds.AllAmenities
+                        select new { HallId = hallId, AmenityId = amenityId });
                 });
 
         builder.HasData(
-            new { Id = 1, Name = "Hall A", Capacity = 50, BaseHourlyRate = 2000m },
-            new { Id = 2, Name = "Hall B", Capacity = 100, BaseHourlyRate = 3500m },
-            new { Id = 3, Name = "Hall C", Capacity = 30, BaseHourlyRate = 1500m });
+            new { Id = SeedIds.HallA, Name = "Hall A", Capacity = 50, BaseHourlyRate = 2000m },
+            new { Id = SeedIds.HallB, Name = "Hall B", Capacity = 100, BaseHourlyRate = 3500m },
+            new { Id = SeedIds.HallC, Name = "Hall C", Capacity = 30, BaseHourlyRate = 1500m });
     }
 }

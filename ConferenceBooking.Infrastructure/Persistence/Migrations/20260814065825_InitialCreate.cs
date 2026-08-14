@@ -17,8 +17,7 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 name: "Amenities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
                 },
@@ -31,8 +30,7 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 name: "Halls",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
                     BaseHourlyRate = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
@@ -46,9 +44,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 name: "Bookings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HallId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HallId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Start = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
                     BaseAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -70,8 +67,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 name: "HallAmenities",
                 columns: table => new
                 {
-                    HallId = table.Column<int>(type: "int", nullable: false),
-                    AmenityId = table.Column<int>(type: "int", nullable: false)
+                    HallId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmenityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,8 +91,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 name: "BookingAmenities",
                 columns: table => new
                 {
-                    BookingId = table.Column<int>(type: "int", nullable: false),
-                    AmenityId = table.Column<int>(type: "int", nullable: false)
+                    BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmenityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,9 +116,9 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 columns: new[] { "Id", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, "Projector", 500m },
-                    { 2, "Wi-Fi", 300m },
-                    { 3, "Sound", 700m }
+                    { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Projector", 500m },
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "Wi-Fi", 300m },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), "Sound", 700m }
                 });
 
             migrationBuilder.InsertData(
@@ -129,9 +126,9 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 columns: new[] { "Id", "BaseHourlyRate", "Capacity", "Name" },
                 values: new object[,]
                 {
-                    { 1, 2000m, 50, "Hall A" },
-                    { 2, 3500m, 100, "Hall B" },
-                    { 3, 1500m, 30, "Hall C" }
+                    { new Guid("11111111-1111-1111-1111-111111111111"), 2000m, 50, "Hall A" },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), 3500m, 100, "Hall B" },
+                    { new Guid("33333333-3333-3333-3333-333333333333"), 1500m, 30, "Hall C" }
                 });
 
             migrationBuilder.InsertData(
@@ -139,15 +136,15 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                 columns: new[] { "AmenityId", "HallId" },
                 values: new object[,]
                 {
-                    { 1, 1 },
-                    { 2, 1 },
-                    { 3, 1 },
-                    { 1, 2 },
-                    { 2, 2 },
-                    { 3, 2 },
-                    { 1, 3 },
-                    { 2, 3 },
-                    { 3, 3 }
+                    { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("11111111-1111-1111-1111-111111111111") },
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new Guid("11111111-1111-1111-1111-111111111111") },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new Guid("11111111-1111-1111-1111-111111111111") },
+                    { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("22222222-2222-2222-2222-222222222222") },
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new Guid("22222222-2222-2222-2222-222222222222") },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new Guid("22222222-2222-2222-2222-222222222222") },
+                    { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("33333333-3333-3333-3333-333333333333") },
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new Guid("33333333-3333-3333-3333-333333333333") },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new Guid("33333333-3333-3333-3333-333333333333") }
                 });
 
             migrationBuilder.CreateIndex(

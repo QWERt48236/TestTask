@@ -15,6 +15,7 @@
     <!-- Pinned: the version resolved transitively is 2.0.0, which has advisory
          GHSA-v5pm-xwqc-g5wc and trips NU1903. Drop once upstream pulls a fixed one. -->
     <PackageReference Include="Microsoft.OpenApi" Version="2.11.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>

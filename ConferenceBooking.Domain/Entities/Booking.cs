@@ -22,6 +22,7 @@ public class Booking
         ArgumentNullException.ThrowIfNull(hall);
         ArgumentNullException.ThrowIfNull(amenities);
 
+        Id = Guid.NewGuid();
         Hall = hall;
         HallId = hall.Id;
         Start = start;
@@ -36,9 +37,9 @@ public class Booking
         CreatedAtUtc = DateTime.UtcNow;
     }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
-    public int HallId { get; private set; }
+    public Guid HallId { get; private set; }
 
     public Hall Hall { get; private set; } = null!;
 

@@ -10,12 +10,13 @@ public class Hall
 
     public Hall(string name, int capacity, decimal baseHourlyRate)
     {
+        Id = Guid.NewGuid();
         Name = EnsureValidName(name);
         Capacity = EnsureValidCapacity(capacity);
         BaseHourlyRate = EnsureValidRate(baseHourlyRate);
     }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public string Name { get; private set; }
 

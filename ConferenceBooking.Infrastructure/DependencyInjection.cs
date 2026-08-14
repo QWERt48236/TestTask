@@ -1,4 +1,6 @@
+using ConferenceBooking.Application.Interfaces;
 using ConferenceBooking.Infrastructure.Persistence;
+using ConferenceBooking.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +16,9 @@ public static class DependencyInjection
         }
 
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
+        services.AddScoped<IHallRepository, HallRepository>();
+        services.AddScoped<IAmenityRepository, AmenityRepository>();
 
         return services;
     }

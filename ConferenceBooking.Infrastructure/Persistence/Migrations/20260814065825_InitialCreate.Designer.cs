@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConferenceBooking.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260813113115_InitialCreate")]
+    [Migration("20260814065825_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BookingAmenities", b =>
                 {
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BookingId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AmenityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AmenityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BookingId", "AmenityId");
 
@@ -42,11 +42,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ConferenceBooking.Domain.Entities.Amenity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -67,19 +64,19 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Name = "Projector",
                             Price = 500m
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                             Name = "Wi-Fi",
                             Price = 300m
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
                             Name = "Sound",
                             Price = 700m
                         });
@@ -87,11 +84,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ConferenceBooking.Domain.Entities.Booking", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("AmenitiesAmount")
                         .HasPrecision(18, 2)
@@ -107,8 +101,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
-                    b.Property<int>("HallId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("HallId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -122,11 +116,8 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ConferenceBooking.Domain.Entities.Hall", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("BaseHourlyRate")
                         .HasPrecision(18, 2)
@@ -150,21 +141,21 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             BaseHourlyRate = 2000m,
                             Capacity = 50,
                             Name = "Hall A"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             BaseHourlyRate = 3500m,
                             Capacity = 100,
                             Name = "Hall B"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
                             BaseHourlyRate = 1500m,
                             Capacity = 30,
                             Name = "Hall C"
@@ -173,11 +164,11 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("HallAmenities", b =>
                 {
-                    b.Property<int>("HallId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("HallId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AmenityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AmenityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("HallId", "AmenityId");
 
@@ -188,48 +179,48 @@ namespace ConferenceBooking.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            HallId = 1,
-                            AmenityId = 1
+                            HallId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            AmenityId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                         },
                         new
                         {
-                            HallId = 1,
-                            AmenityId = 2
+                            HallId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            AmenityId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
                         },
                         new
                         {
-                            HallId = 1,
-                            AmenityId = 3
+                            HallId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            AmenityId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc")
                         },
                         new
                         {
-                            HallId = 2,
-                            AmenityId = 1
+                            HallId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            AmenityId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                         },
                         new
                         {
-                            HallId = 2,
-                            AmenityId = 2
+                            HallId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            AmenityId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
                         },
                         new
                         {
-                            HallId = 2,
-                            AmenityId = 3
+                            HallId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            AmenityId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc")
                         },
                         new
                         {
-                            HallId = 3,
-                            AmenityId = 1
+                            HallId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            AmenityId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                         },
                         new
                         {
-                            HallId = 3,
-                            AmenityId = 2
+                            HallId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            AmenityId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
                         },
                         new
                         {
-                            HallId = 3,
-                            AmenityId = 3
+                            HallId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            AmenityId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc")
                         });
                 });
 
